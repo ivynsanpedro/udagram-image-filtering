@@ -34,7 +34,12 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
       if (!image_url) {
         return res.status(400).send("Query parameter 'image_url' is required");
       }
-    }
+
+      // Filter image and send the resulting file in the response
+      filterImageFromURL(image_url).then(filteredpath => {
+        res.sendFile(filteredpath);
+      });
+  }
   );
 
   /**************************************************************************** */
