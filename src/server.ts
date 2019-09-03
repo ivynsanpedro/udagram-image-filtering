@@ -37,7 +37,11 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
       // Filter image and send the resulting file in the response
       filterImageFromURL(image_url).then(filteredpath => {
-        res.sendFile(filteredpath);
+        res.sendFile(filteredpath, () => {
+          // Delete file after sending
+          let files:Array<string> = [filteredpath];
+          deleteLocalFiles(files);
+        });
       });
   }
   );
